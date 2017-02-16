@@ -15,6 +15,8 @@ fluidPage(
                   max = 50,
                   value = 30)
     ),
+    actionButton(
+    )
     
     # Show a plot of the generated distribution
     mainPanel(
@@ -22,3 +24,4 @@ fluidPage(
     )
   )
 )
+actionButton
