@@ -32,3 +32,9 @@ vignettes/*.pdf
 *.utf8.md
 *.knit.md
 .Rproj.user
+<<<<<<< HEAD
+=======
+
+*.Rproj*
+
+>>>>>>> 8594c813422ae842849362bfe94c2fcf1eaaaa73
