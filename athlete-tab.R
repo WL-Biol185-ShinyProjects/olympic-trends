@@ -1,11 +1,17 @@
 library(shiny)
 
-inputName <- tabItem(tabName = "athlete",
-                     textInput("text", label = h3("Text input"), value = "Enter text..."),
-                     hr(),
-                     fluidRow(column(3, verbatimTextOutput("value"))
-                     )
-)
+athleteNameUI <- fluidPage(
+  textInput("athleteName", label = h3("Athlete Last Name"), value = "Enter Athlete Name..."),
+  verbatimTextOutput("value")
+  )
+
+athleteNameSrv <- renderPrint({ input$athleteName })
 
 
+allOlympics <- rbind(summer, winter)
+
+##allOlympics %>%
+##  filter(
+##    toupper(input$athleteName) = Athlete
+##  )
 
