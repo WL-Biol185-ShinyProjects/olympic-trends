@@ -11,6 +11,8 @@ dashboardPage(
     )
   ),
   dashboardBody(
-    tabItems()
+    tabItems(
+      source(athlete-tab.R~inputName)
+    )
   )
 )
