@@ -14,4 +14,3 @@ allOlympics <- rbind(summer, winter)
 ##  filter(
 ##    toupper(input$athleteName) = Athlete
 ##  )
-
