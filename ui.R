@@ -14,7 +14,8 @@ dashboardPage(
   dashboardBody(
     tabItems(
       tabItem(tabName = "athlete", 
-              athleteNameUI
+              athleteLastNameUI,
+              athleteFirstNameUI
       )
     )
   )

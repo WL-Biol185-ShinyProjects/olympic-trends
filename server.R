@@ -3,7 +3,8 @@ library(shinydashboard)
 source("athlete-tab.R")
 
 function(input, output) {
-  output$value <- athleteNameSrv
+  output$value <- athleteLastNameSrv,
+  output$value <- athleteFirstNameSvr
 }
 
 
