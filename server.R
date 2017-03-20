@@ -1,10 +1,11 @@
 library(shiny)
 library(shinydashboard)
-source("athlete-tab.R")
 
-function(input, output) {
-  output$value <- athleteLastNameSrv,
-  output$value <- athleteFirstNameSvr
+
+function(input, output, session) {
+  source("athlete-tab.R")
+#  source("event-tab.R")
+  output$outName <- athleteNameSrv
+  output$athleteTable <- athleteTableSrv
 }
-
 

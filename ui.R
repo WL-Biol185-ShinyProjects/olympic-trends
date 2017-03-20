@@ -1,5 +1,6 @@
 library(shinydashboard)
 source("athlete-tab.R")
+source("event-tab.R")
 
 dashboardPage(
   dashboardHeader(title = "Olympic Data 1896-2014"),
@@ -14,9 +15,11 @@ dashboardPage(
   dashboardBody(
     tabItems(
       tabItem(tabName = "athlete", 
-              athleteLastNameUI,
-              athleteFirstNameUI
-      )
+              athleteNameUI
+      ) #,
+    #  tabItem(tabName = "event",
+    #          seasonUI
+    #          )
     )
   )
 )
