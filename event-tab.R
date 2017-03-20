@@ -1,11 +1,20 @@
 library(shiny)
+library(dplyr)
 
 seasonUI <- fluidPage(
-  selectInput("season", label = h3("Select Season"),
-              choices = list("Summer" = summer, "Winter" = winter), 
-              selected = 1),  
-  hr(),
-  fluidRow(column(3, verbatimTextOutput("value")))
+  selectInput('season', 
+              'Select Season',
+              unique(allOlympics$Season)
+  )
 )
 
-#output$value <- renderPrint({ input$select })
+seasonSrv <- renderPrint(input$season)
+
+#genderUI <- fluidPage(
+#  selectInput('gender', 
+#              'Select Gender',
+#              unique(allOlympics$Gender)
+#  )
+#)
+
+#genderSrv <- renderPrint(input$gender)
