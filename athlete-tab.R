@@ -20,16 +20,3 @@ athleteFirstNameSrv <- renderPrint({ input$athleteFirstName })
 
 allOlympics <- rbind(summer, winter)
 
-<<<<<<< HEAD
-##allOlympics %>%
-##  filter(
-##    toupper(input$athleteName) = Athlete
-##  )
-=======
-#output$history <- renderTable({
-#  filtered <-
-#    allOlympics %>%
-#    filter(Athlete == formattedName)
-#})
-
->>>>>>> 384101f00c08bf2893117afd10e3d8ce005993c3
