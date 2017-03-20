@@ -12,27 +12,18 @@ athleteNameUI <- fluidPage(
 athleteNameSrv <- renderPrint(input$athleteName)
 
 
-athleteTableUI <- fluidPage(
-  fluidRow(
-    dataTableOutput('table')
-  )
-)
+#athleteTableUI <- fluidPage(
+#  fluidRow(
+#    allOlympics %>%
+#      filter(Athlete == 'xxx') %>%
+#      #summarise(athleteTable = )
+#    dataTableOutput('table')
+#  )
+#)
 
 athleteTableSrv <- renderDataTable(allOlympics)
 
 
-
-athleteTable <- renderDataTable(
-  allOlympics %>%
-    filter(Athlete == outName)
-)
-
-
-
-#  filtered <-
-#    allOlympics %>%
-#    filter(Athlete == formattedName)
-#})
 
 
 

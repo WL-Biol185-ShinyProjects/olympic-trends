@@ -16,10 +16,10 @@ dashboardPage(
     tabItems(
       tabItem(tabName = "athlete", 
               athleteNameUI
-      ) #,
-    #  tabItem(tabName = "event",
-    #          seasonUI
-    #          )
+      ),
+      tabItem(tabName = "event",
+              seasonUI
+      )
     )
   )
 )
