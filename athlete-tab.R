@@ -6,10 +6,22 @@ athleteNameUI <- fluidPage(
               unique(allOlympics$Athlete),
               selectize = TRUE
   ),
-  verbatimTextOutput("outName")
+  dataTableOutput('athleteHistory')
+  
 )
 
-athleteNameSrv <- renderPrint(input$athleteName)
+# athleteHandler <- function(input) {
+#   
+#   renderDataTable({
+#     
+#     allOlympics %>%
+#       filter(Athlete == input$athleteName)
+#     
+#   })
+#   
+# }
+
+# athleteNameSrv <- renderPrint(input$athleteName)
 
 
 #athleteTableUI <- fluidPage(
@@ -21,7 +33,7 @@ athleteNameSrv <- renderPrint(input$athleteName)
 #  )
 #)
 
-athleteTableSrv <- renderDataTable(allOlympics)
+#athleteTableSrv <- renderDataTable(allOlympics)
 
 
 

@@ -8,8 +8,8 @@ athleteFirstNameUI <- fluidPage(
   verbatimTextOutput("value")
 )
 
-athleteLastNameSrv <- renderPrint({ input$athleteLastName })
-athleteFirstNameSrv <- renderPrint({ input$athleteFirstName })
+# athleteLastNameSrv <- renderPrint({ input$athleteLastName })
+# athleteFirstNameSrv <- renderPrint({ input$athleteFirstName })
 
 #formatLastName <- toupper(input$athleteLastName)
 # dont know how to format this argument but...
