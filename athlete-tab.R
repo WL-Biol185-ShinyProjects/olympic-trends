@@ -1,28 +1,38 @@
 library(shiny)
 
-athleteLastNameUI <- fluidPage(
-  textInput("athleteLastName", label = h3("Athlete Last Name"), value = "Enter Last Name..."),
-  verbatimTextOutput("value")
-  )
-
-athleteFirstNameUI <- fluidPage(
-  textInput("athleteFirstName", label = h3("Athlete First Name"), value = "Enter First Name or Initial..."),
-  verbatimTextOutput("value")
+athleteNameUI <- fluidPage(
+  selectInput('athleteName', 
+              'Start typing athlete name...', 
+              unique(allOlympics$Athlete),
+              selectize = TRUE
+  ),
+  verbatimTextOutput("outName")
 )
 
-athleteLastNameSrv <- renderPrint({ input$athleteLastName })
-athleteFirstNameSrv <- renderPrint({ input$athleteFirstName })
+athleteNameSrv <- renderPrint(input$athleteName)
 
-#formatLastName <- toupper(input$athleteLastName)
-# dont know how to format this argument but...
-#formatFirstName <- tolower(input$athleteFirstName) && toupper(input$athleteFirstName[1])
-#formattedName <- cbind(formatLastName, ", ", formatFirstName)
 
-allOlympics <- rbind(summer, winter)
+athleteTableUI <- fluidPage(
+  fluidRow(
+    dataTableOutput('table')
+  )
+)
 
-#output$history <- renderTable({
+athleteTableSrv <- renderDataTable(allOlympics)
+
+
+
+athleteTable <- renderDataTable(
+  allOlympics %>%
+    filter(Athlete == outName)
+)
+
+
+
 #  filtered <-
 #    allOlympics %>%
 #    filter(Athlete == formattedName)
 #})
+
+
 

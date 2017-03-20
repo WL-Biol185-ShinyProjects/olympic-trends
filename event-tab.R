@@ -7,3 +7,5 @@ seasonUI <- fluidPage(
   hr(),
   fluidRow(column(3, verbatimTextOutput("value")))
 )
+
+#output$value <- renderPrint({ input$select })
