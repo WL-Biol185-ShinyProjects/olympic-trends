@@ -36,6 +36,3 @@ athleteNameUI <- fluidPage(
 #athleteTableSrv <- renderDataTable(allOlympics)
 
 
-
-
-
