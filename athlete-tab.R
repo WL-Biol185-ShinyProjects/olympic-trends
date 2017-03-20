@@ -10,29 +10,4 @@ athleteNameUI <- fluidPage(
   
 )
 
-# athleteHandler <- function(input) {
-#   
-#   renderDataTable({
-#     
-#     allOlympics %>%
-#       filter(Athlete == input$athleteName)
-#     
-#   })
-#   
-# }
-
-# athleteNameSrv <- renderPrint(input$athleteName)
-
-
-#athleteTableUI <- fluidPage(
-#  fluidRow(
-#    allOlympics %>%
-#      filter(Athlete == 'xxx') %>%
-#      #summarise(athleteTable = )
-#    dataTableOutput('table')
-#  )
-#)
-
-#athleteTableSrv <- renderDataTable(allOlympics)
-
 

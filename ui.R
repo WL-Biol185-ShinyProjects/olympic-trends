@@ -18,7 +18,7 @@ dashboardPage(
               athleteNameUI
       ),
       tabItem(tabName = "event",
-              seasonUI
+              eventUI
       )
     )
   )
