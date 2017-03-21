@@ -1,6 +1,8 @@
 library(shinydashboard)
 source("athlete-tab.R")
 source("event-tab.R")
+source("trends-tab.R")
+
 
 dashboardPage(
   dashboardHeader(title = "Olympic Data 1896-2014"),
@@ -19,7 +21,9 @@ dashboardPage(
       ),
       tabItem(tabName = "event",
               eventUI
-      )
+      ),
+      tabItem(tabName = "trends",
+              trendsUI)
     )
   )
 )

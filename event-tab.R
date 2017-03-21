@@ -1,36 +1,6 @@
 library(shiny)
 library(dplyr)
 
-seasonUI <- fluidPage(
-  selectInput('season',
-              'Select Season',
-              unique(allOlympics$Season)
-  )
-)
-
-# seasonSrv <- renderPrint(input$season)
-
-#genderUI <- fluidPage(
-#  selectInput('gender', 
-#              'Select Gender',
-#              unique(allOlympics$Gender)
-#  )
-#)
-
-#genderSrv <- renderPrint(input$gender)
-
-# eventSrv <- function(input, output) 
-#   output$table <- DT:renderDataTable((DT::datatable{data <- allOlympics
-#   if (input$Season != "All") {
-#     data <- data[data$Season == inout$season,]
-#   }
-#   if (input&gender !="All" {
-#    data <- data[data$gender == input$gender,]
-#   }
-#     data
-#   )
-# }
-
 eventUI <- fluidPage(
   titlePanel("Event Winners"),
   fluidRow(
@@ -70,7 +40,9 @@ eventUI <- fluidPage(
                      c("All",
                        unique(as.character(allOlympics$Event))))
          )
-  )
+  ),
+  dataTableOutput('eventTable')
+  
 )
   
 
