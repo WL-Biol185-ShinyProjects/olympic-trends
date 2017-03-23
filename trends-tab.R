@@ -20,11 +20,12 @@ trendsUI <- fluidPage(
                                 choices = list("Medal" = 1, "Gender" = 2, "Country" = 3),
                                 selected = 1
                                 )
-             )
+             ),
+           
+           plotOutput('trendsPlot')
            )
-    ),
-    renderPlot('trendsPlot')
+    
+    )
 )
-           
-           
+
 
