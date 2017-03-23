@@ -41,6 +41,7 @@ eventUI <- fluidPage(titlePanel("Event Winners"),
                         unique(as.character(allOlympics$Event))))
           )
    ),
+   
    dataTableOutput('eventTable')
    
  )

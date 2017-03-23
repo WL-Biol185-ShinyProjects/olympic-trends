@@ -6,6 +6,7 @@ athleteNameUI <- fluidPage(
               unique(allOlympics$Athlete),
               selectize = TRUE
   ),
+  
   dataTableOutput('athleteHistory')
   
 )
