@@ -78,7 +78,6 @@ function(input, output, session) {
   #   filter(Discipline == input$discipline) %>%
   #   filter(Event == input$event)
   # })
-  
   seasonDD <- reactive({
     allOlympics %>%
       filter(Season == reactiveValues()$season)
@@ -120,7 +119,7 @@ function(input, output, session) {
 
  output$eventTable <- renderDataTable({
 
-  })
+  }) 
       output$trendsplot <- renderPlot({
         plot(allOlympics$Years, allOlympics$Medal)
     
