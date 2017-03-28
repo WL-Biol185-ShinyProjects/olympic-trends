@@ -8,7 +8,7 @@ trendsUI <- fluidPage(
     column(3,
            wellPanel(
              h4("Filter"),
-             sliderInput("year", "Year", 1896, 2014, value = c(1896, 2014)),
+             sliderInput("year", "Year", min = 1896, max = 2014, step = 1, value = c(1896, 2014)),
              selectInput("country", "Country",
                          c("All", unique(as.character(allOlympics$Country)))
              ),
@@ -22,7 +22,7 @@ trendsUI <- fluidPage(
                                 )
              ),
            
-           plotOutput('trendsPlot')
+           plotOutput('output$trendsPlot')
            )
     
     )
