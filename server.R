@@ -4,92 +4,72 @@ library(ggplot2)
 
 
 function(input, output, session) {
-  
   output$athleteHistory <- renderDataTable({
     
     allOlympics %>%
-      filter(Athlete == input$athleteName)
+      filter(Athlete == input$athleteName) %>%
+      transmute(Year, City, Discipline, Country, Event, Medal)
+  
+    })
+  
+  observe({
+    isolate ({updateSelectizeInput(session, "season", 
+                        choices = c(unique(allOlympics$Season)))
+      })
+    isolate ({
+      updateSelectizeInput(session, "gender", 
+                        choices = c(unique(allOlympics$Gender)))
+    })
+    isolate ({
+      updateSelectizeInput(session, "year",
+                        choices = c(unique(allOlympics$Year)))
+    })
+    isolate ({
+      updateSelectizeInput(session, "sport",
+                        choices = c(unique(allOlympics$Sport)))
+    })
+    isolate ({
+      updateSelectizeInput(session, "dicipline",
+                        choices = c(unique(allOlympics$Discipline)))
+    })
+    isolate ({
+      updateSelectizeInput(session, "event",
+                        choices = c(unique(allOlympics$Event)))
+    })
   })
   
-   observe({
-     isolate ({
-       updateSelectInput(session, "season", 
-                         choices = c(unique(as.character(allOlympics$Season))))
-     })
-     isolate ({
-       updateSelectInput(session, "gender", 
-                         choices = c(unique(as.character(allOlympics$Gender))))
-     })
-     isolate ({
-       updateSelectInput(session, "year", 
-                         choices = c(unique(as.character(allOlympics$Year))))
-     })
-     isolate ({
-       updateSelectInput(session, "sport", 
-                         choices = c(unique(as.character(allOlympics$Sport))))
-     })
-     isolate ({
-       updateSelectInput(session, "dicipline", 
-                         choices = c(unique(as.character(allOlympics$Discipline))))
-       
-     })
-     isolate ({
-       updateSelectInput(session, "event", 
-                         choices = c(unique(as.character(allOlympics$Event))))
-     })
-   })
-   
-   
-   output$eventTable <- renderDataTable({
-     
-     allOlympics %>%
-       filter(Season == input$season) %>%
-       filter(Gender == input$gender) %>%
-       filter(Year == input$year) %>%
-       filter(Sport == input$sport) %>%
-       filter(Discipline == input$discipline) %>%
-       filter(Event == input$event)
- 
-     })
-   
-   trends <- observe({
-     minyear <- input$year[1]
-     maxyear <- input$year[2]
-     country <- input$country
-     discipline <- input$discipline
-   
-     t <- allOlympics %>%
-       filter(
-         Year >= minyear,
-         Year <= maxyear,
-       )
-     
+  output$eventTable <- renderDataTable({
+    allOlympics %>%
+    filter(Season == input$season) %>%
+    filter(Gender == input$gender) %>%
+    filter(Year == input$year) %>%
+    filter(Sport == input$sport) %>%
+    filter(Discipline == input$discipline) %>%
+    filter(Event == input$event) %>%
+      transmute(City, Athlete, Country, Medal)
+ })
+
+  trends <- observe({
+    minyear <- input$year[1]
+    maxyear <- input$year[2]
+    country <- input$country
+    discipline <- input$discipline
+    
+    t <- allOlympics %>%
+    filter(
+      Year >= minyear,
+      Year <= maxyear)
+      })
   
-     })
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   observe ({
-     updateSelectInput(session, "country", choices = )
-     
-   })
-   
-   output$trendsPlot <- renderPlot({
-     
-     allOlympics %>%
-        filter(input$year[1] > Year, input$year[2] < Year) %>%
-        filter(input$country == Country) %>%
-        filter(input$discipline == Discipline) %>%
-        ggplot(aes(x = Year, y = count, color = Medal)) +
-        geom_point()
-     
-     })
+  output$trendsPlot <- renderPlot({
+    
+    allOlympics %>%
+      filter(input$year[1] > Year, input$year[2] < Year) %>%
+      filter(Country == input$country) %>%
+      filter(Discipline == input$discipline) %>%
+      ggplot(aes(Year, n, color = 'sortBy')) + geom_bar(stat = 'identity')
+    
+    })
 }
 
+  

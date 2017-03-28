@@ -5,8 +5,15 @@ source("trends-tab.R")
 
 
 dashboardPage(
-  dashboardHeader(title = "Olympic Data 1896-2014"),
+  skin = "yellow",
+  
+  dashboardHeader(
+    title = "Olympic Data 1896-2014",
+    titleWidth = 350
+  ),
+  
   dashboardSidebar(
+    width = 350,
     sidebarMenu(
       menuItem("Athlete History", tabName = "athlete", icon = icon("id-card")),
       menuItem("Event Search", tabName = "event", icon = icon("trophy")),
@@ -14,6 +21,7 @@ dashboardPage(
       menuItem("Trends", tabName = "trends", icon = icon("line-chart"))
     )
   ),
+  
   dashboardBody(
     tabItems(
       tabItem(tabName = "athlete", 
