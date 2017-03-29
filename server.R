@@ -1,6 +1,7 @@
 library(shiny)
 library(shinydashboard)
 library(ggplot2)
+library(leaflet)
 
 
 function(input, output, session) {
@@ -70,6 +71,33 @@ function(input, output, session) {
       ggplot(aes(Year, n, color = 'sortBy')) + geom_bar(stat = 'identity')
     
     })
+
+  # points <- eventReactive(input$recalc, {
+  #   cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)
+  # }, ignoreNULL = FALSE)
+  # 
+  # output$mymap <- renderLeaflet({
+  #   leaflet() %>%
+  #     addProviderTiles(providers$Stamen.TonerLite,
+  #                      options = providerTileOptions(noWrap = TRUE)
+  #     ) %>%
+  #     addMarkers(data = points())
+  # })
+  points <- eventReactive(input$recalc, {
+    cbind(input$year)
+  }, ignoreNULL = FALSE)
+  
+  output$mymap <- renderLeaflet({
+    leaflet() %>%
+      allOlympics %>%
+      filter(Year == input$obs)
+      addProviderTiles("Stamen.TonerLite",
+                       options = providerTileOptions(noWrap = TRUE)
+      ) %>%
+      addMarkers(data = density())
+  })
 }
+
+
 
   

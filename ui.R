@@ -1,7 +1,10 @@
 library(shinydashboard)
+library(shiny)
+library(leaflet)
 source("athlete-tab.R")
 source("event-tab.R")
 source("trends-tab.R")
+source("map-tab.R")
 
 
 dashboardPage(
@@ -31,7 +34,11 @@ dashboardPage(
               eventUI
       ),
       tabItem(tabName = "trends",
-              trendsUI)
+              trendsUI
+      ),
+      tabItem(tabName = "map", 
+              mapUI
+      )
     )
   )
 )
