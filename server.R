@@ -10,46 +10,35 @@ function(input, output, session) {
     allOlympics %>%
       filter(Athlete == input$athleteName) %>%
       transmute(Year, City, Discipline, Country, Event, Medal)
-  
     })
   
   output$seasonGender <- renderUI ({
     
-    yearOptions <- allOlympics %>%
+    sportOptions <- allOlympics %>%
       filter(Season == input$season) %>%
       filter(Gender == input$gender)
     
-      selectizeInput("year", "Year:",
-                     c("All", unique(yearOptions$Year))
-                     )
-      
-  })
+    selectizeInput("sport", "Sport:",
+                   c("All", unique(sportOptions$Sport))
+    )
+    
+    # yearOptions <- allOlympics %>%
+    #   filter(Season == input$season) %>%
+    #   filter(Gender == input$gender)
+    # 
+    #   selectizeInput("year", "Year:",
+    #                  c("All", unique(yearOptions$Year))
+    #                  )
+    
+    # disciplineOptions <- sportOptions %>%
+    #   filter(Sport == input$sport)
+    # 
+    # selectizeInput("discipline", "Discipline:", 
+    #                c("All", unique(disciplineOptions$Discipline))
+    # )
   
-  # observe({
-  #   isolate ({updateSelectizeInput(session, "season", 
-  #                       choices = c(unique(allOlympics$Season)))
-  #     })
-  #   isolate ({
-  #     updateSelectizeInput(session, "gender", 
-  #                       choices = c(unique(allOlympics$Gender)))
-  #   })
-  #   isolate ({
-  #     updateSelectizeInput(session, "year",
-  #                       choices = c(unique(allOlympics$Year)))
-  #   })
-  #   isolate ({
-  #     updateSelectizeInput(session, "sport",
-  #                       choices = c(unique(allOlympics$Sport)))
-  #   })
-  #   isolate ({
-  #     updateSelectizeInput(session, "dicipline",
-  #                       choices = c(unique(allOlympics$Discipline)))
-  #   })
-  #   isolate ({
-  #     updateSelectizeInput(session, "event",
-  #                       choices = c(unique(allOlympics$Event)))
-  #   })
-  # })
+  })
+      
   
   output$eventTable <- renderDataTable({
     allOlympics %>%
@@ -110,7 +99,5 @@ function(input, output, session) {
       addMarkers(data = density())
   })
 }
-
-
 
   
