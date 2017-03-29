@@ -13,31 +13,43 @@ function(input, output, session) {
   
     })
   
-  observe({
-    isolate ({updateSelectizeInput(session, "season", 
-                        choices = c(unique(allOlympics$Season)))
-      })
-    isolate ({
-      updateSelectizeInput(session, "gender", 
-                        choices = c(unique(allOlympics$Gender)))
-    })
-    isolate ({
-      updateSelectizeInput(session, "year",
-                        choices = c(unique(allOlympics$Year)))
-    })
-    isolate ({
-      updateSelectizeInput(session, "sport",
-                        choices = c(unique(allOlympics$Sport)))
-    })
-    isolate ({
-      updateSelectizeInput(session, "dicipline",
-                        choices = c(unique(allOlympics$Discipline)))
-    })
-    isolate ({
-      updateSelectizeInput(session, "event",
-                        choices = c(unique(allOlympics$Event)))
-    })
+  output$seasonGender <- renderUI ({
+    
+    yearOptions <- allOlympics %>%
+      filter(Season == input$season) %>%
+      filter(Gender == input$gender)
+    
+      selectizeInput("year", "Year:",
+                     c("All", unique(yearOptions$Year))
+                     )
+      
   })
+  
+  # observe({
+  #   isolate ({updateSelectizeInput(session, "season", 
+  #                       choices = c(unique(allOlympics$Season)))
+  #     })
+  #   isolate ({
+  #     updateSelectizeInput(session, "gender", 
+  #                       choices = c(unique(allOlympics$Gender)))
+  #   })
+  #   isolate ({
+  #     updateSelectizeInput(session, "year",
+  #                       choices = c(unique(allOlympics$Year)))
+  #   })
+  #   isolate ({
+  #     updateSelectizeInput(session, "sport",
+  #                       choices = c(unique(allOlympics$Sport)))
+  #   })
+  #   isolate ({
+  #     updateSelectizeInput(session, "dicipline",
+  #                       choices = c(unique(allOlympics$Discipline)))
+  #   })
+  #   isolate ({
+  #     updateSelectizeInput(session, "event",
+  #                       choices = c(unique(allOlympics$Event)))
+  #   })
+  # })
   
   output$eventTable <- renderDataTable({
     allOlympics %>%
@@ -68,7 +80,8 @@ function(input, output, session) {
       filter(input$year[1] > Year, input$year[2] < Year) %>%
       filter(Country == input$country) %>%
       filter(Discipline == input$discipline) %>%
-      ggplot(aes(Year, n, color = 'sortBy')) + geom_bar(stat = 'identity')
+      summarise(n = n())
+      ggplot(aes(Year, n)) + aes_string(color = input$sortBy) + geom_point()
     
     })
 
