@@ -2,6 +2,7 @@ library(shiny)
 library(shinydashboard)
 library(ggplot2)
 library(leaflet)
+library(dplyr)
 
 function(input, output, session) {
   
@@ -25,26 +26,29 @@ function(input, output, session) {
     
   })
   
-  output$disciplineUI <- renderUI({
-    
-    disciplineOptions <- allOlympics %>%
-      filter(Season == input$season) %>%
-      filter(Gender == input$gender) %>%
-      filter(Sport == input$sport)
-    
-    selectizeInput("discipline", "Discipline:", 
-                   c("All", unique(disciplineOptions$Discipline))
-    )
-    
-  })
+  # output$disciplineUI <- renderUI({
+  #   
+  #   disciplineOptions <- allOlympics %>%
+  #     filter(Season == input$season) %>%
+  #     filter(Gender == input$gender) %>%
+  #     filter(Sport == input$sport)
+  #   
+  #   print(unique(disciplineOptions$Discipline))
+  #   
+  #   selectizeInput("discipline", "Discipline:", 
+  #                  c("All", unique(disciplineOptions$Discipline))
+  #   )
+  #   
+  # })
   
   output$eventUI <- renderUI({
     
     eventOptions <- allOlympics %>%
       filter(Season == input$season) %>%
       filter(Gender == input$gender) %>%
-      filter(Sport == input$sport) %>%
-      filter(Discipline == input$discipline) 
+      filter(Sport == input$sport)
+
+    print(unique(eventOptions$Event))
     
     selectizeInput("event", "Event:",
                    c("All", unique(eventOptions$Event))
@@ -58,14 +62,31 @@ function(input, output, session) {
       filter(Season == input$season) %>%
       filter(Gender == input$gender) %>%
       filter(Sport == input$sport) %>%
-      filter(Discipline == input$discipline) %>%
-      filter(Event == input$event)
+      filter(Discipline == input$discipline)
+    
+    print(yearOptions$Year)
     
     selectizeInput("year", "Year:", 
                    c("All", unique(yearOptions$Year))
     )
     
   })
+  
+  
+  output$eventUI <- renderUI({
+
+    eventOptions <- allOlympics %>%
+      filter(Season == input$season) %>%
+      filter(Gender == input$gender) %>%
+      filter(Sport == input$sport) %>%
+      filter(Discipline == input$discipline)
+
+    selectizeInput("event", "Event:",
+                   c("All", unique(eventOptions$Event))
+    )
+
+  })
+  
   
   output$eventTable <- renderDataTable({
     
@@ -74,7 +95,7 @@ function(input, output, session) {
       filter(Gender == input$gender) %>%
       filter(Sport == input$sport) %>%
       filter(Discipline == input$discipline) %>%
-      filter(Event == input$event) %>%
+      # filter(Event == input$event) %>%
       filter(Year == input$year) %>%
       transmute(City, Athlete, Country, Medal)
     
@@ -94,12 +115,17 @@ function(input, output, session) {
   
   output$trendsPlot <- renderPlot({
     
-    allOlympics %>%
-      filter(input$year[1] > Year, input$year[2] < Year) %>%
+    plotData <- allOlympics %>%
+      filter(Year > input$year[1], Year < input$year[2]) %>%
       filter(Country == input$country) %>%
       filter(Discipline == input$discipline) %>%
+      group_by(Year) %>%
       summarise(n = n())
-      ggplot(aes(Year, n)) + aes_string(color = input$sortBy) + geom_point()
+    
+    plotData %>%    
+      ggplot(aes(Year, n)) + geom_point()
+    
+    #+ aes_string(color = input$sortBy)
     
     })
 
@@ -118,14 +144,22 @@ function(input, output, session) {
     cbind(input$year)
   }, ignoreNULL = FALSE)
   
-  output$mymap <- renderLeaflet({
-    leaflet() %>%
-      allOlympics %>%
-      filter(Year == input$obs)
-      addProviderTiles("Stamen.TonerLite",
-                       options = providerTileOptions(noWrap = TRUE)
-      ) %>%
-      addMarkers(data = density())
+  output$myMap <- renderLeaflet({
+    
+    bins <- seq(0, 108, 12)
+    pal  <- colorBin("YlOrRd", map@data$value, bins)
+    
+    leaflet(data = map) %>%
+      addTiles()        %>%
+      addPolygons(fillColor = ~pal(value))
+    
+    # leaflet() %>%
+    #   allOlympics %>%
+    #   filter(Year == input$obs)
+    #   addProviderTiles("Stamen.TonerLite",
+    #                    options = providerTileOptions(noWrap = TRUE)
+    #   ) %>%
+    #   addMarkers(data = density())
   })
 }
 
