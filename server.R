@@ -44,9 +44,9 @@ function(input, output, session) {
       filter(Season == input$season) %>%
       filter(Gender == input$gender) %>%
       filter(Sport == input$sport) %>%
-      filter(Discipline == input$discipline)
+      filter(Discipline == input$discipline) 
     
-    selectizeInput("event", "Event:", 
+    selectizeInput("event", "Event:",
                    c("All", unique(eventOptions$Event))
     )
     

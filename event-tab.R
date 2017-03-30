@@ -2,7 +2,7 @@ library(shiny)
 library(dplyr)
 library(ggplot2)
 
-eventUI <- fluidPage(
+eventTabUI <- fluidPage(
   titlePanel("Event Winners"),
    fluidRow(
      selectizeInput("season", "Season:",
