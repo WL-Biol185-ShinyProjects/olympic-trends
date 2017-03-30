@@ -13,7 +13,7 @@ function(input, output, session) {
     
   })
     
-  output$seasonGenderUI <- renderUI({
+  output$sportUI <- renderUI({
     
     sportOptions <- allOlympics %>%
       filter(Season == input$season) %>%

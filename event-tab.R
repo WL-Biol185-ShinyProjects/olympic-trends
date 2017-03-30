@@ -9,7 +9,7 @@ eventUI <- fluidPage(
                     c("All", unique(allOlympics$Season))),
      selectizeInput("gender", "Gender:",
                     c("All", unique(allOlympics$Gender))),
-     uiOutput("seasonGenderUI"),
+     uiOutput("sportUI"),
      uiOutput("disciplineUI"),
      uiOutput("eventUI"),
      uiOutput("yearUI"), 
