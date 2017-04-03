@@ -69,12 +69,14 @@ function(input, output, session) {
   
   output$eventTable <- renderDataTable({
     
+    tableEvent <- Event == input$event
+    
     allOlympics %>%
       filter(Season == input$season) %>%
       filter(Gender == input$gender) %>%
       filter(Sport == input$sport) %>%
       filter(Discipline == input$discipline) %>%
-      filter(Event == input$event) %>%
+      filter(tableEvent) %>%
       filter(Year == input$year) %>%
       transmute(City, Athlete, Country, Medal)
     
