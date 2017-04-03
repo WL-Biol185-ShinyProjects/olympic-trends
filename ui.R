@@ -31,7 +31,7 @@ dashboardPage(
               athleteNameUI
       ),
       tabItem(tabName = "event",
-              eventUI
+              eventTabUI
       ),
       tabItem(tabName = "trends",
               trendsUI

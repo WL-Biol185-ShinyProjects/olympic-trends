@@ -1,0 +1,26 @@
+---
+title: "kate-jake.Rmd"
+author: "GBW"
+date: "3/22/2017"
+output: html_document
+---
+
+```{r}
+map <- rgdal::readOGR("/home/gregg/countries.geo.json", "OGRGeoJSON")
+View(map)
+map@data$year <- allOlympics$Year
+map@data$year <- allOlympics$Year
+
+```
+
+```{r}
+library(leaflet)
+
+bins <- seq(0, 108, 12)
+pal  <- colorBin("YlOrRd", map@data$value, bins)
+
+leaflet(data = map) %>%
+  addTiles()        %>%
+  addPolygons(fillColor = ~pal(value))
+```
+
