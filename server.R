@@ -95,21 +95,25 @@ function(input, output, session) {
   #     Year <= maxyear)
   #     })
   
-  # output$trendsPlot <- renderPlot({
-  #   
-  #   plotData <- allOlympics %>%
-  #     filter(Year > input$year[1], Year < input$year[2]) %>%
-  #     filter(Country == input$country) %>%
-  #     filter(Discipline == input$discipline) %>%
-  #     group_by(Year) %>%
-  #     summarise(n = n())
-  #   
-  #   plotData %>%    
-  #     ggplot(aes(Year, n)) + geom_point()
-  #   
-  #   # + aes_string(color = input$sortBy)
-  #   
-  #   })
+  output$trendsPlot <- renderPlot({
+
+    plotData <- allOlympics %>%
+      filter(Year > input$year[1], Year < input$year[2]) %>%
+      filter(Country == input$country) %>%
+      filter(Discipline == input$discipline) %>%
+      group_by(Year) %>%
+      summarise(n = n())
+
+    plotData %>%
+      ggplot(aes(Year, n), size = 10) +
+      geom_point(color="blue")+
+      theme(plot.background=element_rect(fill='gold')) +
+      ggtitle("Medal Trends Over Time") +
+      labs(x = "Year", y = "Number of Medals")
+
+    # + aes_string(color = input$sortBy)
+
+    })
 
   # points <- eventReactive(input$recalc, {
   #   cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)

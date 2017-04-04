@@ -5,7 +5,7 @@ library(ggplot2)
 trendsUI <- fluidPage(
   titlePanel("Olympic Trends"),
   fluidRow(
-    column(3,
+    column(4,
            wellPanel(
              h4("Filter"),
              sliderInput("year", "Year", min = 1896, max = 2014, step = 1, value = c(1896, 2014)),
@@ -17,15 +17,14 @@ trendsUI <- fluidPage(
                
              ),
              radioButtons("sortBy", "Color By", 
-                          choices = c("Medal", "Gender", "Country")
+                          choices = c("Medal", "Gender")
                           )
-             ),
-           
-           plotOutput('trendsPlot')
-           
+             )
+    ),
+    column(8,
+           wellPanel(
+             plotOutput('trendsPlot')
            )
-    
     )
+  )
 )
-
-
