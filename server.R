@@ -106,9 +106,9 @@ function(input, output, session) {
 
     plotData %>%
       ggplot(aes(Year, n), size = 10) +
-      geom_point(color="blue")+
-      theme(plot.background=element_rect(fill='gold')) +
-      ggtitle("Medal Trends Over Time") +
+      geom_point()+
+      # theme(plot.background=element_rect(fill='gold')) +
+      # ggtitle("Medal Trends Over Time") +
       labs(x = "Year", y = "Number of Medals")
 
     # + aes_string(color = input$sortBy)
