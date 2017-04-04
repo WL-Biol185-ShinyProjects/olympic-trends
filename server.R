@@ -68,25 +68,7 @@ function(input, output, session) {
   #   )
   # 
   # })
-  
-<<<<<<< HEAD
-  output$eventTable <- renderDataTable({
-    
-    tableEvent <- Event == input$event
-    
-    allOlympics %>%
-      filter(Season == input$season) %>%
-      filter(Gender == input$gender) %>%
-      filter(Sport == input$sport) %>%
-      filter(Discipline == input$discipline) %>%
-      
-      filter(tableEvent) %>%
-      # filter(Event == input$event) %>%
-      filter(Year == input$year) %>%
-      transmute(City, Athlete, Country, Medal)
-    
-  })
-=======
+ 
   
   # output$eventTable <- renderDataTable({
   #   
@@ -100,7 +82,6 @@ function(input, output, session) {
   #     transmute(City, Athlete, Country, Medal)
   #   
   # })
->>>>>>> 99c3ec2943276097f2da9673ffeea6239a315502
 
   # trends <- observe({
   #   minyear <- input$year[1]
