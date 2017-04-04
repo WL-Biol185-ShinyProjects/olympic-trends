@@ -9,14 +9,11 @@ eventTabUI <- fluidPage(
                     c("All", unique(allOlympics$Season))),
      selectizeInput("gender", "Gender:",
                     c("All", unique(allOlympics$Gender))),
-<<<<<<< HEAD
      uiOutput("yearUI"),
      uiOutput("seasonGenderUI"),
      uiOutput("disciplineUI"),
-=======
      uiOutput("sportUI"),
      # uiOutput("disciplineUI"),
->>>>>>> beff01c215f3e6360232bee8e96899ce19c15045
      uiOutput("eventUI"),
      
      dataTableOutput('eventTable')

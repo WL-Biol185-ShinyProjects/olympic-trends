@@ -97,11 +97,9 @@ function(input, output, session) {
       filter(Gender == input$gender) %>%
       filter(Sport == input$sport) %>%
       filter(Discipline == input$discipline) %>%
-<<<<<<< HEAD
+      
       filter(tableEvent) %>%
-=======
       # filter(Event == input$event) %>%
->>>>>>> beff01c215f3e6360232bee8e96899ce19c15045
       filter(Year == input$year) %>%
       transmute(City, Athlete, Country, Medal)
     
