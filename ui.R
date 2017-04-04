@@ -4,8 +4,6 @@ library(leaflet)
 source("athlete-tab.R")
 source("event-tab.R")
 source("trends-tab.R")
-source("map-tab.R")
-
 
 dashboardPage(
   skin = "yellow",
@@ -35,10 +33,10 @@ dashboardPage(
       ),
       tabItem(tabName = "trends",
               trendsUI
-      ),
-      tabItem(tabName = "map", 
-              mapUI
       )
+      # tabItem(tabName = "map", 
+      #         mapUI
+      # )
     )
   )
 )

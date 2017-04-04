@@ -18,13 +18,13 @@ library(leaflet)
   
 # )
 
-mapUI <- fluidPage(
-  
-  map <- rgdal::readOGR("/home/gregg/countries.geo.json", "OGRGeoJSON"),
-  map@data$value <- runif(180, 0, 100),
-  
-  leafletOutput("myMap")
-)
+# mapUI <- fluidPage(
+#   
+#   map <- rgdal::readOGR("/home/gregg/countries.geo.json", "OGRGeoJSON"),
+#   map@data$value <- runif(180, 0, 100),
+#   
+#   leafletOutput("myMap")
+# )
 
 
 

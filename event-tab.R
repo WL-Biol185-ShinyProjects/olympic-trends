@@ -13,9 +13,15 @@ eventTabUI <- fluidPage(
      uiOutput("seasonGenderUI"),
      uiOutput("disciplineUI"),
      uiOutput("sportUI"),
+<<<<<<< HEAD
      # uiOutput("disciplineUI"),
      uiOutput("eventUI"),
+=======
+     uiOutput("disciplineUI"),
+     uiOutput("eventUI"), 
+>>>>>>> 99c3ec2943276097f2da9673ffeea6239a315502
      
      dataTableOutput('eventTable')
+     
    )
 )
