@@ -1,10 +1,11 @@
 library(shiny)
 library(shinydashboard)
-# library(leaflet)
+library(leaflet)
 source("global.R")
 source("athlete-tab.R")
 source("event-tab.R")
 source("trends-tab.R")
+source("map-tab.R")
 
 dashboardPage(
   skin = "yellow",
@@ -30,7 +31,7 @@ dashboardPage(
       
       tabItem(tabName = "home",
               fluidRow(
-                box(width = 12, img(src = "www/rings.jpg")),
+                box(width = 12, img(src = "rings.jpg")),
                 
                 box(width = 12, p("Welcome! This Shiny application utilizes Olympic 
                                   data from 1896 - 2014. The dataset incldues an entry 
@@ -55,11 +56,10 @@ dashboardPage(
       
       tabItem(tabName = "trends",
               trendsUI
+      ),
+      tabItem(tabName = "map",
+              mapUI
       )
-      
-      # tabItem(tabName = "map", 
-      #         mapUI
-      # )
       
     )
   )

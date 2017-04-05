@@ -2,6 +2,7 @@ library(shiny)
 library(shinydashboard)
 library(ggplot2)
 library(dplyr)
+library(leaflet)
 source("global.R")
 
 function(input, output){
@@ -18,6 +19,10 @@ function(input, output){
 ##########Event Tab
   output$sportUI <- renderUI({
 
+    if (is.null(input$season) || is.null(input$gender)) {
+      return()
+    }
+    
     sportOptions <- allOlympics %>%
       filter(Season == input$season) %>%
       filter(Gender == input$gender)
@@ -114,6 +119,51 @@ function(input, output){
       ggsave(file, plot = plotInput(), device = device)
       
     })
+  points <- eventReactive(input$recalc, {
+    cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)
+  }, ignoreNULL = FALSE)
+  
+  filteredData <- reactive({
+    allOlympics[allOlympics$Medal >= input$range[1] & allOlympics$Medal <= input$range[2],]
+  })
+  output$mymap <- renderLeaflet({
+    leaflet(allOlympics) %>% addTiles() %>%
+    addProviderTiles(allOlympics$Stamen.TonerLite,
+                       options = providerTileOptions(noWrap = TRUE)
+      ) %>%
+      addMarkers(data = Summerlatlondata,
+                 ~Longitude, ~Latitude)
+  })
+#   output$Map <- renderLeaflet({
+#     
+#     allOlympics %>%
+#       
+#       filter(medal == allOlympics$Medal) %>%
+#       
+#       leaflet() %>%
+#       setview(lng = -9.311828, lat = 10.38279, zoom = 4) %>%
+#       addTiles() %>%
+#       addCircles( radius = ~Value*150,
+#                   label = ~Medal
+#                   fillOpacity = .05)
+#       })
+#   
+# observe({
+#   if(input$yearSlider %in% allOlympics$Medal) {
+#     
+#     allOlympics %>%
+#       
+#       filter(year == min(allOlympics$Year)) %>%
+#                          
+#                          leafletProxy("Map", data=.) %>%
+#                            clearShapes() %>%
+#                            
+#                            addCircles(radius = ~value*150,
+#                                       label = ~Medal
+#                                       fillOpacity = .05)
+#   }
+# 
+# })
 
   # points <- eventReactive(input$recalc, {
   #   cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)

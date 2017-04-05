@@ -1,6 +1,22 @@
 library(shiny)
 library(leaflet)
 
+
+mapUI <- fluidPage(leafletOutput("mymap"),
+  p(),
+  actionButton("recalc", "New points")
+)
+#   box(background = "black", leafletOutput("Map", height = "400")),
+# 
+# box(title = "Controls", background = "black", status = "",
+#     sliderInput("Dateslider", "Looping Animation:",
+#                 min(allOlympics$Year),
+#                 max(allOlympics$Year)
+#     ))
+# ))
+
+# tabPanel("Map", leafletOutput("shinymap", height = 500, width = 950), position = "below")
+
 # mapUI <- fluidPage(
 #   leafletOutput("worldMap"),
 #   p(),
