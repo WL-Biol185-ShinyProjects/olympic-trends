@@ -1,6 +1,6 @@
 library(shiny)
 library(shinydashboard)
-library(leaflet)
+# library(leaflet)
 source("global.R")
 source("athlete-tab.R")
 source("event-tab.R")
@@ -27,21 +27,40 @@ dashboardPage(
   
   dashboardBody(
     tabItems(
-      tabItem(tabName = "home"
-#              p("Welcome to ...")
+      
+      tabItem(tabName = "home",
+              fluidRow(
+                box(width = 12, img(src = "www/rings.jpg")),
+                
+                box(width = 12, p("Welcome! This Shiny application utilizes Olympic 
+                                  data from 1896 - 2014. The dataset incldues an entry 
+                                  for every Olympic medal won over the years. 
+                                  Information includes the year and location of that 
+                                  Olympic games, the athlete's name, country of origin, 
+                                  sport, discipline, event and medal won. Our goal for 
+                                  this app was to create a user-friendly interface that 
+                                  enables the user to find statistics about specific 
+                                  atheltes, certain event winners and medal trends 
+                                  over time."))
+              )
       ),
+      
       tabItem(tabName = "athlete", 
               athleteNameUI
       ),
+      
       tabItem(tabName = "event",
               eventTabUI
       ),
+      
       tabItem(tabName = "trends",
               trendsUI
       )
+      
       # tabItem(tabName = "map", 
       #         mapUI
       # )
+      
     )
   )
 )

@@ -4,8 +4,9 @@ library(ggplot2)
 source("global.R")
 
 trendsUI <- fluidPage(
-  titlePanel("Olympic Trends"),
   fluidRow(
+    titlePanel("Olympic Trends"),
+    p("This tool allows you to view medal trends for a specific country and discipline throughout a selected time period."), 
     column(4,
            wellPanel(
              h4("Filter"),
@@ -15,17 +16,19 @@ trendsUI <- fluidPage(
              ),
              selectInput("discipline", "Discipline",
                          unique(allOlympics$Discipline)
-               
+                         
              ),
              radioButtons("sortBy", "Color By", 
                           choices = c("Medal", "Gender")
-                          )
              )
+           )
     ),
     column(8,
            wellPanel(
-             plotOutput('trendsPlot')
+             plotOutput('trendsPlot'),
+             downloadButton('downloadTrendsPlot', 'Download Plot')
            )
     )
+    
   )
 )

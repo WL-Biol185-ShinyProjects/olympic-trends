@@ -6,6 +6,7 @@ source("global.R")
 
 function(input, output){
   
+##########Athlete Tab
   output$athleteHistory <- renderDataTable({
     
     allOlympics %>%
@@ -14,6 +15,7 @@ function(input, output){
     
   })
     
+##########Event Tab
   output$sportUI <- renderUI({
 
     sportOptions <- allOlympics %>%
@@ -81,6 +83,7 @@ function(input, output){
 
   })
 
+##########Trends Tab
   output$trendsPlot <- renderPlot({
 
     plotData <- allOlympics %>%
@@ -92,13 +95,24 @@ function(input, output){
 
     plotData %>%
       ggplot(aes(Year, n), size = 10) +
-      geom_point()+
+      geom_point() +
       # theme(plot.background=element_rect(fill='gold')) +
       # ggtitle("Medal Trends Over Time") +
       labs(x = "Year", y = "Number of Medals")
 
     # + aes_string(color = input$sortBy)
 
+    })
+  
+  output$downloadTrendsPlot <- downloadHandler(
+    
+    filename = 'test.png',
+    content = function(file) {
+      device <- function(..., width, height) {
+        grDevices::png(..., width = width, height = height, res = 300, units = "in")
+      }
+      ggsave(file, plot = plotInput(), device = device)
+      
     })
 
   # points <- eventReactive(input$recalc, {
