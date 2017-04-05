@@ -1,17 +1,19 @@
 library(shiny)
-library(dplyr)
-library(ggplot2)
+source("global.R")
 
 eventTabUI <- fluidPage(
   titlePanel("Event Winners"),
    fluidRow(
-     selectizeInput("season", "Season:",
-                    c("All", unique(allOlympics$Season))),
-     selectizeInput("gender", "Gender:",
-                    c("All", unique(allOlympics$Gender))),
+     selectizeInput("season", "Season:", 
+                    unique(allOlympics$Season)
+     ),
+     selectizeInput("gender", "Gender:", 
+                    unique(allOlympics$Gender)
+     ),
      uiOutput("sportUI"),
      uiOutput("disciplineUI"),
      uiOutput("eventUI"), 
+     uiOutput("yearUI"),
 
      dataTableOutput('eventTable')
      

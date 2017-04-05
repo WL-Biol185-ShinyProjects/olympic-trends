@@ -1,6 +1,7 @@
-library(shinydashboard)
 library(shiny)
+library(shinydashboard)
 library(leaflet)
+source("global.R")
 source("athlete-tab.R")
 source("event-tab.R")
 source("trends-tab.R")
@@ -10,12 +11,13 @@ dashboardPage(
   
   dashboardHeader(
     title = "Olympic Data 1896-2014",
-    titleWidth = 350
+    titleWidth = 300
   ),
   
   dashboardSidebar(
-    width = 350,
+    width = 300,
     sidebarMenu(
+      menuItem("Home", tabName = "home", icon = icon("home")),
       menuItem("Athlete History", tabName = "athlete", icon = icon("id-card")),
       menuItem("Event Search", tabName = "event", icon = icon("trophy")),
       menuItem("Map", tabName = "map", icon = icon("map")),
@@ -25,6 +27,9 @@ dashboardPage(
   
   dashboardBody(
     tabItems(
+      tabItem(tabName = "home"
+#              p("Welcome to ...")
+      ),
       tabItem(tabName = "athlete", 
               athleteNameUI
       ),

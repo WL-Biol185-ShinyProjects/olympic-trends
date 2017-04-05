@@ -2,15 +2,15 @@ library(shiny)
 library(shinydashboard)
 library(ggplot2)
 library(dplyr)
-library(data.table)
+source("global.R")
 
-function(input, output, session) {
+function(input, output){
   
   output$athleteHistory <- renderDataTable({
     
     allOlympics %>%
       filter(Athlete == input$athleteName) %>%
-      transmute(Year, City, Discipline, Country, Event, Medal)
+      transmute(Country, Year, City, Discipline, Event, Medal)
     
   })
     
@@ -20,8 +20,8 @@ function(input, output, session) {
       filter(Season == input$season) %>%
       filter(Gender == input$gender)
 
-    selectizeInput("sport", "Sport:",
-                   c("All", unique(sportOptions$Sport))
+    selectizeInput("sport", "Sport:", 
+                   unique(sportOptions$Sport)
     )
 
   })
@@ -32,9 +32,9 @@ function(input, output, session) {
       filter(Season == input$season) %>%
       filter(Gender == input$gender) %>%
       filter(Sport == input$sport)
-
-    selectizeInput("discipline", "Discipline:",
-                   c("All", unique(disciplineOptions$Discipline))
+    
+    selectizeInput("disc", "Discipline:", 
+                   unique(disciplineOptions$Discipline)
     )
 
   })
@@ -45,56 +45,42 @@ function(input, output, session) {
       filter(Season == input$season) %>%
       filter(Gender == input$gender) %>%
       filter(Sport == input$sport) %>%
-      filter(Discipline == input$discipline)
+      filter(Discipline == input$disc)
     
-    eventDF <- data.frame(eventOptions$Year, eventOptions$City, eventOptions$Athlete, eventOptions$Country, eventOptions$Event, eventOptions$Medal)
-    
-    selectizeInput("event", "Event:",
-                   c("All", unique(eventDF$Event))
+    selectizeInput("event", "Event:", 
+                   unique(eventOptions$Event)
     )
     
   })
   
-  # output$yearUI <- renderUI({
-  # 
-  #   yearOptions <- allOlympics %>%
-  #     filter(Season == input$season) %>%
-  #     filter(Gender == input$gender) %>%
-  #     filter(Sport == input$sport) %>%
-  #     filter(Discipline == input$discipline)
-  # 
-  #   selectizeInput("year", "Year:",
-  #                  c("All", unique(yearOptions$Year))
-  #   )
-  # 
-  # })
- 
-  
-  # output$eventTable <- renderDataTable({
-  #   
-  #   allOlympics %>%
-  #     filter(Season == input$season) %>%
-  #     filter(Gender == input$gender) %>%
-  #     filter(Sport == input$sport) %>%
-  #     filter(Discipline == input$discipline) %>%
-  #     # filter(Event == input$event) %>%
-  #     # filter(Year == input$year) %>%
-  #     transmute(City, Athlete, Country, Medal)
-  #   
-  # })
+  output$yearUI <- renderUI({
 
-  # trends <- observe({
-  #   minyear <- input$year[1]
-  #   maxyear <- input$year[2]
-  #   country <- input$country
-  #   discipline <- input$discipline
-  #   
-  #   t <- allOlympics %>%
-  #   filter(
-  #     Year >= minyear,
-  #     Year <= maxyear)
-  #     })
+    yearOptions <- allOlympics %>%
+      filter(Season == input$season) %>%
+      filter(Gender == input$gender) %>%
+      filter(Sport == input$sport) %>%
+      filter(Discipline == input$disc) %>%
+      filter(Event == input$event)
+
+    selectizeInput("yr", "Year:",
+                   unique(yearOptions$Year)
+    )
+
+  })
   
+  output$eventTable <- renderDataTable({
+
+    allOlympics %>%
+      filter(Season == input$season) %>%
+      filter(Gender == input$gender) %>%
+      filter(Sport == input$sport) %>%
+      filter(Discipline == input$disc) %>%
+      filter(Event == input$event) %>%
+      filter(Year == input$yr) %>%
+      transmute(Medal, Country, Athlete)
+
+  })
+
   output$trendsPlot <- renderPlot({
 
     plotData <- allOlympics %>%
@@ -106,7 +92,7 @@ function(input, output, session) {
 
     plotData %>%
       ggplot(aes(Year, n), size = 10) +
-      geom_point() +
+      geom_point()+
       # theme(plot.background=element_rect(fill='gold')) +
       # ggtitle("Medal Trends Over Time") +
       labs(x = "Year", y = "Number of Medals")
