@@ -2,6 +2,10 @@ library(shiny)
 library(shinydashboard)
 library(ggplot2)
 library(dplyr)
+library(plyr)
+library(rjson)
+library(reshape2)
+library(RColorBrewer)
 library(leaflet)
 source("global.R")
 
@@ -34,6 +38,10 @@ function(input, output){
   })
   
   output$disciplineUI <- renderUI({
+    
+    # if (is.null(input$season) || is.null(input$gender) || is.null(input$sport)) {
+    #   return()
+    # }
 
     disciplineOptions <- allOlympics %>%
       filter(Season == input$season) %>%
@@ -110,93 +118,50 @@ function(input, output){
     })
   
   output$downloadTrendsPlot <- downloadHandler(
-    
-    filename = 'test.png',
     content = function(file) {
+      png(file)
       device <- function(..., width, height) {
         grDevices::png(..., width = width, height = height, res = 300, units = "in")
       }
-      ggsave(file, plot = plotInput(), device = device)
-      
-    })
-  points <- eventReactive(input$recalc, {
-    cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)
-  }, ignoreNULL = FALSE)
-  
-  filteredData <- reactive({
-    allOlympics[allOlympics$Medal >= input$range[1] & allOlympics$Medal <= input$range[2],]
-  })
-  output$mymap <- renderLeaflet({
-    leaflet(allOlympics) %>% addTiles() %>%
-    addProviderTiles(allOlympics$Stamen.TonerLite,
-                       options = providerTileOptions(noWrap = TRUE)
-      ) %>%
-      addMarkers(data = Summerlatlondata,
-                 ~Longitude, ~Latitude)
-  })
-#   output$Map <- renderLeaflet({
-#     
-#     allOlympics %>%
-#       
-#       filter(medal == allOlympics$Medal) %>%
-#       
-#       leaflet() %>%
-#       setview(lng = -9.311828, lat = 10.38279, zoom = 4) %>%
-#       addTiles() %>%
-#       addCircles( radius = ~Value*150,
-#                   label = ~Medal
-#                   fillOpacity = .05)
-#       })
-#   
-# observe({
-#   if(input$yearSlider %in% allOlympics$Medal) {
-#     
-#     allOlympics %>%
-#       
-#       filter(year == min(allOlympics$Year)) %>%
-#                          
-#                          leafletProxy("Map", data=.) %>%
-#                            clearShapes() %>%
-#                            
-#                            addCircles(radius = ~value*150,
-#                                       label = ~Medal
-#                                       fillOpacity = .05)
-#   }
-# 
-# })
+      ggsave(file, plot = "trendsPlot", device = device)
 
+    })
+
+  ################think we can delete this  
   # points <- eventReactive(input$recalc, {
   #   cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)
   # }, ignoreNULL = FALSE)
   # 
-  # output$mymap <- renderLeaflet({
-  #   leaflet() %>%
-  #     addProviderTiles(providers$Stamen.TonerLite,
-  #                      options = providerTileOptions(noWrap = TRUE)
-  #     ) %>%
-  #     addMarkers(data = points())
+  # filteredData <- reactive({
+  #   allOlympics[allOlympics$Medal >= input$range[1] & allOlympics$Medal <= input$range[2],]
   # })
-  # points <- eventReactive(input$recalc, {
-  #   cbind(input$year)
-  # }, ignoreNULL = FALSE)
-  # 
-  # output$myMap <- renderLeaflet({
-  #   
-  #   bins <- seq(0, 108, 12)
-  #   pal  <- colorBin("YlOrRd", map@data$value, bins)
-  #   
-  #   leaflet(data = map) %>%
-  #     addTiles()        %>%
-  #     addPolygons(fillColor = ~pal(value))
+ 
+  output$medalMap <-renderLeaflet({
     
-    # leaflet() %>%
-    #   allOlympics %>%
-    #   filter(Year == input$obs)
-    #   addProviderTiles("Stamen.TonerLite",
-    #                    options = providerTileOptions(noWrap = TRUE)
-    #   ) %>%
-    #   addMarkers(data = density())
-  # })
+    mymap <- rgdal :: readOGR("countries.geo.json", "OGRGeoJSON")
+    
+    medalData <-allOlympics %>%
+      group_by(Country) %>%
+      summarise("n" = n())
+    
+    ######merging map and olympic data 
+    countryMap <- left_join(medalData,countryjsonsame1, by=c("Country" = "name"))
+    newTable <- left_join(mymap@data,countryMap, by= c("name" = "name"))
+    mymap@data <- newTable
+    
+    pal <- colorBin("YlOrRd", domain = mymap$n, bins = bins)
+  
+    
+    leaflet(data = mymap) %>%
+      addTiles(options= tileOptions(noWrap=TRUE)) %>%
+      addPolygons(
+        fillColor = ~pal(n),
+        weight = 2,
+        opacity = 1,
+        color = "white",
+        dashArray = "3",
+        fillOpacity = 0.7)
+  })
   
 }
 
