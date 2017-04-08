@@ -142,17 +142,15 @@ function(input, output){
     # + aes_string(color = input$sortBy)
     
   })
-  
+
   output$downloadTrendsPlot <- downloadHandler(
-    
-    filename = 'test.png',
+    filename = function() { 
+      paste(input$trendsPlot, '.png', sep='') 
+    },
     content = function(file) {
-      device <- function(..., width, height) {
-        grDevices::png(..., width = width, height = height, res = 300, units = "in")
-      }
-      ggsave(file, plot = plotInput(), device = device)
-      
-    })
+      ggsave(file)
+    }
+  )
   
   # points <- eventReactive(input$recalc, {
   #   cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)

@@ -22,7 +22,7 @@ trendsUI <- fluidPage(
     ),
     column(8,
            wellPanel(
-             plotOutput('trendsPlot'),
+             plotOutput('trendsPlot'), 
              downloadButton('downloadTrendsPlot', 'Download Plot')
            )
     )
