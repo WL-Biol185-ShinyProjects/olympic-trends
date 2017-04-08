@@ -2,10 +2,16 @@ library(shiny)
 library(leaflet)
 
 
-mapUI <- fluidPage(leafletOutput("mymap"),
-  p(),
-  actionButton("recalc", "New points")
-)
+mapUI <- fluidPage(
+  
+  leafletOutput("medalMap", height = 500, width = 950)
+
+  )
+
+  
+  # fluidPage(leafletOutput("mymap"),
+  # p(),
+  # actionButton("recalc", "New points")
 #   box(background = "black", leafletOutput("Map", height = "400")),
 # 
 # box(title = "Controls", background = "black", status = "",
