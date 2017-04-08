@@ -119,21 +119,23 @@ function(input, output){
       ggsave(file, plot = plotInput(), device = device)
       
     })
-  points <- eventReactive(input$recalc, {
-    cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)
-  }, ignoreNULL = FALSE)
   
-  filteredData <- reactive({
-    allOlympics[allOlympics$Medal >= input$range[1] & allOlympics$Medal <= input$range[2],]
-  })
-  output$mymap <- renderLeaflet({
-    leaflet(allOlympics) %>% addTiles() %>%
-    addProviderTiles(allOlympics$Stamen.TonerLite,
-                       options = providerTileOptions(noWrap = TRUE)
-      ) %>%
-      addMarkers(data = Summerlatlondata,
-                 ~Longitude, ~Latitude)
-  })
+  # points <- eventReactive(input$recalc, {
+  #   cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)
+  # }, ignoreNULL = FALSE)
+  
+  # filteredData <- reactive({
+  #   allOlympics[allOlympics$Medal >= input$range[1] & allOlympics$Medal <= input$range[2],]
+  # })
+  
+  # output$mymap <- renderLeaflet({
+  #   leaflet(allOlympics) %>% addTiles() %>%
+  #   addProviderTiles(allOlympics$Stamen.TonerLite,
+  #                      options = providerTileOptions(noWrap = TRUE)
+  #     ) %>%
+  #     addMarkers(data = Summerlatlondata,
+  #                ~Longitude, ~Latitude)
+  # })
 #   output$Map <- renderLeaflet({
 #     
 #     allOlympics %>%
