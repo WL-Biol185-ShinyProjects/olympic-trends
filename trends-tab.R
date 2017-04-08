@@ -17,9 +17,6 @@ trendsUI <- fluidPage(
              selectInput("discipline", "Discipline",
                          unique(allOlympics$Discipline)
                          
-             ),
-             radioButtons("sortBy", "Color By", 
-                          choices = c("Medal", "Gender")
              )
            )
     ),

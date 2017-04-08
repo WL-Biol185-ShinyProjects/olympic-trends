@@ -22,7 +22,7 @@ function(input, output){
     if (is.null(input$season) || is.null(input$gender)) {
       return()
     }
-    
+
     sportOptions <- allOlympics %>%
       filter(Season == input$season) %>%
       filter(Gender == input$gender)
@@ -34,6 +34,13 @@ function(input, output){
   })
   
   output$disciplineUI <- renderUI({
+    
+    if (is.null(input$season) || 
+        is.null(input$gender) || 
+        is.null(input$sport)
+    ){
+      return()
+    }
     
     disciplineOptions <- allOlympics %>%
       filter(Season == input$season) %>%
@@ -47,6 +54,14 @@ function(input, output){
   })
   
   output$eventUI <- renderUI({
+    
+    if (is.null(input$season) || 
+        is.null(input$gender) || 
+        is.null(input$sport) ||
+        is.null(input$disc)
+    ){
+      return()
+    }
     
     eventOptions <- allOlympics %>%
       filter(Season == input$season) %>%
@@ -62,6 +77,15 @@ function(input, output){
   
   output$yearUI <- renderUI({
     
+    if (is.null(input$season) || 
+        is.null(input$gender) || 
+        is.null(input$sport) ||
+        is.null(input$disc) ||
+        is.null(input$event)
+    ){
+      return()
+    }
+    
     yearOptions <- allOlympics %>%
       filter(Season == input$season) %>%
       filter(Gender == input$gender) %>%
@@ -76,6 +100,16 @@ function(input, output){
   })
   
   output$eventTable <- renderDataTable({
+    
+    if (is.null(input$season) || 
+        is.null(input$gender) || 
+        is.null(input$sport) ||
+        is.null(input$disc) ||
+        is.null(input$event) ||
+        is.null(input$yr)
+    ){
+      return()
+    }
     
     allOlympics %>%
       filter(Season == input$season) %>%

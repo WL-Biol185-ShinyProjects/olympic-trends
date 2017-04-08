@@ -1,5 +1,6 @@
 library(shiny)
 source("global.R")
+source("server.R")
 
 eventTabUI <- fluidPage(
   fluidRow(
@@ -12,7 +13,6 @@ eventTabUI <- fluidPage(
     selectizeInput("gender", "Gender:", 
                    unique(allOlympics$Gender)
     ),
-    
     uiOutput("sportUI"),
     uiOutput("disciplineUI"),
     uiOutput("eventUI"), 

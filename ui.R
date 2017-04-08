@@ -34,7 +34,7 @@ dashboardPage(
                 box(width = 12, img(src = "rings.jpg")),
                 
                 box(width = 12, p("Welcome! This Shiny application utilizes Olympic 
-                                  data from 1896 - 2014. The dataset incldues an entry 
+                                  data from 1896 - 2014. The dataset includes an entry 
                                   for every Olympic medal won over the years. 
                                   Information includes the year and location of that 
                                   Olympic games, the athlete's name, country of origin, 
