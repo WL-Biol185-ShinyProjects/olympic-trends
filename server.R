@@ -135,11 +135,8 @@ function(input, output){
     plotData %>%
       ggplot(aes(Year, n), size = 10) +
       geom_point() +
-      # theme(plot.background=element_rect(fill='gold')) +
-      # ggtitle("Medal Trends Over Time") +
+      ggtitle("Medal Trends Over Time") +
       labs(x = "Year", y = "Number of Medals")
-    
-    # + aes_string(color = input$sortBy)
     
   })
 
