@@ -2,16 +2,12 @@ library(shiny)
 library(shinydashboard)
 library(ggplot2)
 library(dplyr)
-library(plyr)
-library(rjson)
-library(reshape2)
-library(RColorBrewer)
 library(leaflet)
 source("global.R")
 
 function(input, output){
   
-##########Athlete Tab
+  ##########Athlete Tab
   output$athleteHistory <- renderDataTable({
     
     allOlympics %>%
@@ -19,10 +15,10 @@ function(input, output){
       transmute(Country, Year, City, Discipline, Event, Medal)
     
   })
-    
-##########Event Tab
+  
+  ##########Event Tab
   output$sportUI <- renderUI({
-
+    
     if (is.null(input$season) || is.null(input$gender)) {
       return()
     }
@@ -30,19 +26,15 @@ function(input, output){
     sportOptions <- allOlympics %>%
       filter(Season == input$season) %>%
       filter(Gender == input$gender)
-
+    
     selectizeInput("sport", "Sport:", 
                    unique(sportOptions$Sport)
     )
-
+    
   })
   
   output$disciplineUI <- renderUI({
     
-    # if (is.null(input$season) || is.null(input$gender) || is.null(input$sport)) {
-    #   return()
-    # }
-
     disciplineOptions <- allOlympics %>%
       filter(Season == input$season) %>%
       filter(Gender == input$gender) %>%
@@ -51,11 +43,11 @@ function(input, output){
     selectizeInput("disc", "Discipline:", 
                    unique(disciplineOptions$Discipline)
     )
-
+    
   })
   
   output$eventUI <- renderUI({
-
+    
     eventOptions <- allOlympics %>%
       filter(Season == input$season) %>%
       filter(Gender == input$gender) %>%
@@ -69,22 +61,22 @@ function(input, output){
   })
   
   output$yearUI <- renderUI({
-
+    
     yearOptions <- allOlympics %>%
       filter(Season == input$season) %>%
       filter(Gender == input$gender) %>%
       filter(Sport == input$sport) %>%
       filter(Discipline == input$disc) %>%
       filter(Event == input$event)
-
+    
     selectizeInput("yr", "Year:",
                    unique(yearOptions$Year)
     )
-
+    
   })
   
   output$eventTable <- renderDataTable({
-
+    
     allOlympics %>%
       filter(Season == input$season) %>%
       filter(Gender == input$gender) %>%
@@ -93,40 +85,40 @@ function(input, output){
       filter(Event == input$event) %>%
       filter(Year == input$yr) %>%
       transmute(Medal, Country, Athlete)
-
+    
   })
-
-##########Trends Tab
+  
+  ##########Trends Tab
   output$trendsPlot <- renderPlot({
-
+    
     plotData <- allOlympics %>%
       filter(Year > input$year[1], Year < input$year[2]) %>%
       filter(Country == input$country) %>%
       filter(Discipline == input$discipline) %>%
       group_by(Year) %>%
       summarise(n = n())
-
+    
     plotData %>%
       ggplot(aes(Year, n), size = 10) +
       geom_point() +
       # theme(plot.background=element_rect(fill='gold')) +
       # ggtitle("Medal Trends Over Time") +
       labs(x = "Year", y = "Number of Medals")
-
+    
     # + aes_string(color = input$sortBy)
-
-    })
+    
+  })
   
   output$downloadTrendsPlot <- downloadHandler(
+    
+    filename = 'test.png',
     content = function(file) {
-      png(file)
       device <- function(..., width, height) {
         grDevices::png(..., width = width, height = height, res = 300, units = "in")
       }
-      ggsave(file, plot = "trendsPlot", device = device)
-
+      ggsave(file, plot = plotInput(), device = device)
+      
     })
-<<<<<<< HEAD
   
   # points <- eventReactive(input$recalc, {
   #   cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)
@@ -144,75 +136,68 @@ function(input, output){
   #     addMarkers(data = Summerlatlondata,
   #                ~Longitude, ~Latitude)
   # })
-#   output$Map <- renderLeaflet({
-#     
-#     allOlympics %>%
-#       
-#       filter(medal == allOlympics$Medal) %>%
-#       
-#       leaflet() %>%
-#       setview(lng = -9.311828, lat = 10.38279, zoom = 4) %>%
-#       addTiles() %>%
-#       addCircles( radius = ~Value*150,
-#                   label = ~Medal
-#                   fillOpacity = .05)
-#       })
-#   
-# observe({
-#   if(input$yearSlider %in% allOlympics$Medal) {
-#     
-#     allOlympics %>%
-#       
-#       filter(year == min(allOlympics$Year)) %>%
-#                          
-#                          leafletProxy("Map", data=.) %>%
-#                            clearShapes() %>%
-#                            
-#                            addCircles(radius = ~value*150,
-#                                       label = ~Medal
-#                                       fillOpacity = .05)
-#   }
-# 
-# })
-=======
->>>>>>> 125d2d90210b76de7dcc78ade56b7631e5fc8f7d
-
-  ################think we can delete this  
+  #   output$Map <- renderLeaflet({
+  #     
+  #     allOlympics %>%
+  #       
+  #       filter(medal == allOlympics$Medal) %>%
+  #       
+  #       leaflet() %>%
+  #       setview(lng = -9.311828, lat = 10.38279, zoom = 4) %>%
+  #       addTiles() %>%
+  #       addCircles( radius = ~Value*150,
+  #                   label = ~Medal
+  #                   fillOpacity = .05)
+  #       })
+  #   
+  # observe({
+  #   if(input$yearSlider %in% allOlympics$Medal) {
+  #     
+  #     allOlympics %>%
+  #       
+  #       filter(year == min(allOlympics$Year)) %>%
+  #                          
+  #                          leafletProxy("Map", data=.) %>%
+  #                            clearShapes() %>%
+  #                            
+  #                            addCircles(radius = ~value*150,
+  #                                       label = ~Medal
+  #                                       fillOpacity = .05)
+  #   }
+  # 
+  # })
+  
   # points <- eventReactive(input$recalc, {
   #   cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)
   # }, ignoreNULL = FALSE)
   # 
-  # filteredData <- reactive({
-  #   allOlympics[allOlympics$Medal >= input$range[1] & allOlympics$Medal <= input$range[2],]
+  # output$mymap <- renderLeaflet({
+  #   leaflet() %>%
+  #     addProviderTiles(providers$Stamen.TonerLite,
+  #                      options = providerTileOptions(noWrap = TRUE)
+  #     ) %>%
+  #     addMarkers(data = points())
   # })
- 
-  output$medalMap <-renderLeaflet({
-    
-    mymap <- rgdal :: readOGR("countries.geo.json", "OGRGeoJSON")
-    
-    medalData <-allOlympics %>%
-      group_by(Country) %>%
-      summarise("n" = n())
-    
-    ######merging map and olympic data 
-    countryMap <- left_join(medalData,countryjsonsame1, by=c("Country" = "name"))
-    newTable <- left_join(mymap@data,countryMap, by= c("name" = "name"))
-    mymap@data <- newTable
-    
-    pal <- colorBin("YlOrRd", domain = mymap$n, bins = bins)
+  # points <- eventReactive(input$recalc, {
+  #   cbind(input$year)
+  # }, ignoreNULL = FALSE)
+  # 
+  # output$myMap <- renderLeaflet({
+  #   
+  #   bins <- seq(0, 108, 12)
+  #   pal  <- colorBin("YlOrRd", map@data$value, bins)
+  #   
+  #   leaflet(data = map) %>%
+  #     addTiles()        %>%
+  #     addPolygons(fillColor = ~pal(value))
   
-    
-    leaflet(data = mymap) %>%
-      addTiles(options= tileOptions(noWrap=TRUE)) %>%
-      addPolygons(
-        fillColor = ~pal(n),
-        weight = 2,
-        opacity = 1,
-        color = "white",
-        dashArray = "3",
-        fillOpacity = 0.7)
-  })
+  # leaflet() %>%
+  #   allOlympics %>%
+  #   filter(Year == input$obs)
+  #   addProviderTiles("Stamen.TonerLite",
+  #                    options = providerTileOptions(noWrap = TRUE)
+  #   ) %>%
+  #   addMarkers(data = density())
+  # })
   
 }
-
-  
