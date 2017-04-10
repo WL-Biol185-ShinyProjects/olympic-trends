@@ -31,7 +31,7 @@ dashboardPage(
       
       tabItem(tabName = "home",
               fluidRow(
-                box(width = 12, img(src = "rings.jpg")),
+                box(width = 12, img(src = "rings.jpg", align = "center")),
                 
                 box(width = 12, p("Welcome! This Shiny application utilizes Olympic 
                                   data from 1896 - 2014. The dataset includes an entry 

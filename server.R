@@ -134,7 +134,7 @@ function(input, output){
     
     plotData %>%
       ggplot(aes(Year, n), size = 10) +
-      geom_point(color = "goldenrod2") +
+      geom_point(color = "goldenrod2", size = 4) +
       labs(x = "Year", y = "Number of Medals", title = "Medal Trends Over Time") +
       fte_theme() +
       theme(plot.title = element_text(size = 20, face = "bold", margin = margin(10, 0, 10, 0))) +
