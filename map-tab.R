@@ -5,11 +5,11 @@ library(leaflet)
 mapUI <- fluidPage(
   fluidRow(
     titlePanel("Olympic Medal Map"),
-    p("This map shows the number of medals won by countries participating 
-      in the Olympics over the years. Click the button below the year 
-      slider to begin animation."),
+    p("This map represents the number of medals won by countries participating 
+      in the Olympics. The darker the color of the country, the more Olympic 
+      medals they have won over the years."),
     
-    leafletOutput("medalMap", height = 500, width = 950)
+    leafletOutput("medalMap", height = 500, width = 600)
 
   )
 )
