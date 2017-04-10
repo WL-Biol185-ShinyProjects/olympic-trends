@@ -170,14 +170,8 @@ function(input, output){
     
     leaflet(data = map) %>%
       addTiles() %>%
-      addPolygons(
-        fillColor = ~pal(q), 
-        weight = 2, 
-        opacity = 1, 
-        color = "white", 
-        dashArray = "2", 
-        fillOpacity = 0.7
-      ) %>%
+      addPolygons(fillColor = ~pal(q), weight = 2, opacity = 1,
+                  color = "white", dashArray = "2", fillOpacity = 0.7) %>%
       addLegend("bottomright", pal = pal, values = map$q, 
                 title = "Total Number of Medals", 
                 opacity = 1)
