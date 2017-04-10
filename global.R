@@ -28,10 +28,10 @@ fte_theme <- function() {
     theme(axis.ticks=element_blank()) +
     
     # Set title and axis labels, and format these and tick marks
-    theme(plot.title=element_text(color=color.title, size=20, vjust=1.25)) +
+    theme(plot.title=element_text(color=color.title, size=20, hjust=0.5)) +
     theme(axis.text.x=element_text(size=11,color=color.axis.text)) +
     theme(axis.text.y=element_text(size=11,color=color.axis.text)) +
-    theme(axis.title.x=element_text(size=14,color=color.axis.title, vjust=0, face = "bold")) +
+    theme(axis.title.x=element_text(size=14,color=color.axis.title, vjust=1.25, face = "bold")) +
     theme(axis.title.y=element_text(size=14,color=color.axis.title, vjust=1.25, face = "bold")) +
     
     # Plot margins
