@@ -1,6 +1,9 @@
 ########Global data file########
 allOlympics <- read.csv("data/allOlympics.csv", header = TRUE)
 
+########Map file########
+countryAbrv <- read.csv("data/countryAbrv.csv", header = TRUE)
+
 ########Create function for plot format########
 library(RColorBrewer)
 

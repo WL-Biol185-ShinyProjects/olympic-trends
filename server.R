@@ -155,90 +155,29 @@ function(input, output){
 #############Map Tab#############
   output$medalMap <- renderLeaflet({
     
-    leaflet(allOlympics) %>%
-      addTiles()
+    map <- rgdal::readOGR("/home/gregg/countries.geo.json", "OGRGeoJSON")
+    
+    medalData <- allOlympics %>%
+      group_by(Country) %>%
+      summarise(q = n())
+    
+    #############Merge Map and Olympic Data#############
+    countryMap <- left_join(medalData, countryAbrv, by = c("Country" = "Country") )
+    medalMapData <- left_join(map@data, countryMap, b = c("name" = "name"))
+    map@data <- medalMapData
+    
+    pal <- colorBin("YlOrRd", domain = map$q)
+    
+    leaflet(data = map) %>%
+      addTiles() %>%
+      addPolygons(
+        fillColor = ~pal(q), 
+        weight = 2, 
+        opacity = 1, 
+        color = "white", 
+        dashArray = "3", 
+        fillOpacity = 0.7
+      )
     
   })
-  
-  
-  # points <- eventReactive(input$recalc, {
-  #   cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)
-  # }, ignoreNULL = FALSE)
-  
-  # filteredData <- reactive({
-  #   allOlympics[allOlympics$Medal >= input$range[1] & allOlympics$Medal <= input$range[2],]
-  # })
-  
-  # output$mymap <- renderLeaflet({
-  #   leaflet(allOlympics) %>% addTiles() %>%
-  #   addProviderTiles(allOlympics$Stamen.TonerLite,
-  #                      options = providerTileOptions(noWrap = TRUE)
-  #     ) %>%
-  #     addMarkers(data = Summerlatlondata,
-  #                ~Longitude, ~Latitude)
-  # })
-  #   output$Map <- renderLeaflet({
-  #     
-  #     allOlympics %>%
-  #       
-  #       filter(medal == allOlympics$Medal) %>%
-  #       
-  #       leaflet() %>%
-  #       setview(lng = -9.311828, lat = 10.38279, zoom = 4) %>%
-  #       addTiles() %>%
-  #       addCircles( radius = ~Value*150,
-  #                   label = ~Medal
-  #                   fillOpacity = .05)
-  #       })
-  #   
-  # observe({
-  #   if(input$yearSlider %in% allOlympics$Medal) {
-  #     
-  #     allOlympics %>%
-  #       
-  #       filter(year == min(allOlympics$Year)) %>%
-  #                          
-  #                          leafletProxy("Map", data=.) %>%
-  #                            clearShapes() %>%
-  #                            
-  #                            addCircles(radius = ~value*150,
-  #                                       label = ~Medal
-  #                                       fillOpacity = .05)
-  #   }
-  # 
-  # })
-  
-  # points <- eventReactive(input$recalc, {
-  #   cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)
-  # }, ignoreNULL = FALSE)
-  # 
-  # output$mymap <- renderLeaflet({
-  #   leaflet() %>%
-  #     addProviderTiles(providers$Stamen.TonerLite,
-  #                      options = providerTileOptions(noWrap = TRUE)
-  #     ) %>%
-  #     addMarkers(data = points())
-  # })
-  # points <- eventReactive(input$recalc, {
-  #   cbind(input$year)
-  # }, ignoreNULL = FALSE)
-  # 
-  # output$myMap <- renderLeaflet({
-  #   
-  #   bins <- seq(0, 108, 12)
-  #   pal  <- colorBin("YlOrRd", map@data$value, bins)
-  #   
-  #   leaflet(data = map) %>%
-  #     addTiles()        %>%
-  #     addPolygons(fillColor = ~pal(value))
-  
-  # leaflet() %>%
-  #   allOlympics %>%
-  #   filter(Year == input$obs)
-  #   addProviderTiles("Stamen.TonerLite",
-  #                    options = providerTileOptions(noWrap = TRUE)
-  #   ) %>%
-  #   addMarkers(data = density())
-  # })
-  
 }
