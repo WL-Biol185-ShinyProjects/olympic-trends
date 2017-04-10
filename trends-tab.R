@@ -7,7 +7,8 @@ trendsUI <- fluidPage(
   fluidRow(
     titlePanel("Olympic Trends"),
     p("This tool allows you to view medal trends for a specific country and 
-      discipline throughout a selected time period."), 
+      discipline throughout a selected time period. You can even download 
+      the plot you create!"), 
     column(4,
            wellPanel(
              h4("Filter"),
