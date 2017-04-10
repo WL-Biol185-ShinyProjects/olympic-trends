@@ -7,7 +7,7 @@ source("global.R")
 
 function(input, output){
   
-  ##########Athlete Tab
+#############Athlete Tab#############
   output$athleteHistory <- renderDataTable({
     
     allOlympics %>%
@@ -16,7 +16,7 @@ function(input, output){
     
   })
   
-  ##########Event Tab
+#############Event Tab  #############
   output$sportUI <- renderUI({
     
     if (is.null(input$season) || is.null(input$gender)) {
@@ -101,8 +101,8 @@ function(input, output){
   
   output$eventTable <- renderDataTable({
     
-    if (is.null(input$season) || 
-        is.null(input$gender) || 
+    if (is.null(input$season) ||
+        is.null(input$gender) ||
         is.null(input$sport) ||
         is.null(input$disc) ||
         is.null(input$event) ||
@@ -122,7 +122,7 @@ function(input, output){
     
   })
   
-  ##########Trends Tab
+#############Trends Tab#############
   output$trendsPlot <- renderPlot({
     
     plotData <- allOlympics %>%
@@ -134,10 +134,13 @@ function(input, output){
     
     plotData %>%
       ggplot(aes(Year, n), size = 10) +
-      geom_point() +
-      ggtitle("Medal Trends Over Time") +
-      labs(x = "Year", y = "Number of Medals")
-    
+      geom_point(color = "goldenrod2") +
+      labs(x = "Year", y = "Number of Medals", title = "Medal Trends Over Time") +
+      fte_theme() +
+      theme(plot.title = element_text(size = 20, face = "bold", margin = margin(10, 0, 10, 0))) +
+      geom_hline(yintercept = 0, size = 0.4, color = "black") +
+      geom_vline(xintercept = input$year[1], size = 0.4, color = "black")
+      
   })
 
   output$downloadTrendsPlot <- downloadHandler(
@@ -148,6 +151,14 @@ function(input, output){
       ggsave(file)
     }
   )
+  
+#############Map Tab#############
+  output$medalMap <- renderLeaflet({
+    
+    leaflet(allOlympics) %>%
+      addTiles()
+    
+  })
   
   # points <- eventReactive(input$recalc, {
   #   cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)

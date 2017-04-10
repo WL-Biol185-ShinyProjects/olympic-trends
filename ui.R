@@ -39,10 +39,10 @@ dashboardPage(
                                   Information includes the year and location of that 
                                   Olympic games, the athlete's name, country of origin, 
                                   sport, discipline, event and medal won. Our goal for 
-                                  this app was to create a user-friendly interface that 
+                                  this application was to create a user-friendly interface that 
                                   enables the user to find statistics about specific 
-                                  atheltes, certain event winners and medal trends 
-                                  over time."))
+                                  athletes and event winners, view medal winnings by countries 
+                                  on a map, and create interactive plots of medal trends over time."))
               )
       ),
       

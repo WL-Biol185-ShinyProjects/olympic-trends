@@ -6,7 +6,7 @@ eventTabUI <- fluidPage(
   fluidRow(
     titlePanel("Event Winners"),
     p("This tool allows you to search for medal winners of specific Olympic events. 
-      Start by selecting season and continue with following choice boxes."), 
+      Start by selecting a season and continue with the following choice boxes."), 
     selectizeInput("season", "Season:", 
                    unique(allOlympics$Season)
     ),
