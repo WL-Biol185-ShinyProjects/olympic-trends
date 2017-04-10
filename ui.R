@@ -37,7 +37,7 @@ dashboardPage(
                                   data from 1896 - 2014. The dataset includes an entry 
                                   for every Olympic medal won over the years. 
                                   Information includes the year and location of that 
-                                  Olympic games, the athlete's name, country of origin, 
+                                  Olympic Games, the athlete's name, country of origin, 
                                   sport, discipline, event and medal won. Our goal for 
                                   this application was to create a user-friendly interface that 
                                   enables the user to find statistics about specific 
