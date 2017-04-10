@@ -177,7 +177,10 @@ function(input, output){
         color = "white", 
         dashArray = "2", 
         fillOpacity = 0.7
-      )
+      ) %>%
+      addLegend("bottomright", pal = pal, values = map$q, 
+                title = "Total Number of Medals", 
+                opacity = 1)
     
   })
 }
