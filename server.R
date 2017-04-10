@@ -175,7 +175,7 @@ function(input, output){
         weight = 2, 
         opacity = 1, 
         color = "white", 
-        dashArray = "3", 
+        dashArray = "2", 
         fillOpacity = 0.7
       )
     
