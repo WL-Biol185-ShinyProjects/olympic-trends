@@ -11,13 +11,14 @@ trendsUI <- fluidPage(
     column(4,
            wellPanel(
              h4("Filter"),
-             sliderInput("year", "Year", sep = "", min = 1896, max = 2014, step = 1, value = c(1896, 2014)),
+             sliderInput("year", "Year", sep = "", 
+                         min = 1896, max = 2014, step = 1, value = c(1896, 2014)
+             ),
              selectInput("country", "Country",
                          unique(allOlympics$Country)
              ),
              selectInput("discipline", "Discipline",
                          unique(allOlympics$Discipline)
-                         
              )
            )
     ),
